@@ -1,0 +1,6 @@
+# markdownlint-cli2 configuration
+# https://github.com/DavidAnson/markdownlint-cli2
+
+config:
+  # Line length is noisy for prose-heavy READMEs and wrapped shell examples.
+  MD013: false

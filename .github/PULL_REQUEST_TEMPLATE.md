@@ -1,3 +1,4 @@
+<!-- markdownlint-disable-file MD041 -->
 ## Description
 
 <!-- A concise summary of the change and the motivation behind it. -->
