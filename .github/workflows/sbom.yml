@@ -9,6 +9,9 @@ on:
 
 permissions: read-all
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   sbom:
     name: Generate & Submit SBOM
@@ -31,13 +34,12 @@ jobs:
           tags: image:sbom
           load: true
 
-      - name: Generate SBOM with Syft
-        uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610 # v0.24.0
+      - name: Generate SBOM with Trivy
+        uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1 # v0.35.0
         with:
-          image: image:sbom
+          image-ref: image:sbom
           format: spdx-json
-          output-file: sbom.spdx.json
-          upload-artifact: false
+          output: sbom.spdx.json
 
       - name: Submit SBOM to GitHub dependency graph
         uses: advanced-security/spdx-dependency-submission-action@169d22427d74f3faf93504e70b03eede8dab272a # v0.2.0
