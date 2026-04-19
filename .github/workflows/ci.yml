@@ -57,6 +57,25 @@ jobs:
           output_file_path: checkov.sarif,
           quiet: true
 
+      - name: Normalize Checkov SARIF tool name
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          sarif_path = Path("checkov.sarif")
+          sarif = json.loads(sarif_path.read_text())
+
+          for run in sarif.get("runs", []):
+              driver = run.get("tool", {}).get("driver", {})
+              if driver.get("name") == "checkov":
+                  driver["name"] = "Checkov"
+
+          sarif_path.write_text(json.dumps(sarif))
+          PY
+
       - name: Build image
         uses: docker/build-push-action@bcafcacb16a39f128d818304e6c9c0c18556b85f # v7.1.0
         with:
