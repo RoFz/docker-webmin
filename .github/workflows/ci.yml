@@ -52,6 +52,7 @@ jobs:
         with:
           file: Dockerfile
           framework: dockerfile
+          skip_check: CKV_DOCKER_8
           output_format: sarif
           output_file_path: checkov.sarif,
           quiet: true

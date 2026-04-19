@@ -28,7 +28,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
       > /etc/apt/sources.list.d/webmin.list; \
     apt-get update; \
     apt-get install -y --install-recommends webmin; \
-    apt-get purge -y --auto-remove gnupg
+    apt-get purge -y --auto-remove gnupg; \
+    rm -f /etc/webmin/miniserv.pem
 
 RUN set -eux; \
     install -d -m 0755 /usr/local/share/docker-webmin /var/lib/docker-webmin; \
@@ -37,8 +38,7 @@ RUN set -eux; \
       printf '%s\n' "${users_hash%% *}" > /usr/local/share/docker-webmin/default-miniserv.users.sha256; \
     else \
       printf '%s\n' absent > /usr/local/share/docker-webmin/default-miniserv.users.sha256; \
-    fi; \
-    rm -f /etc/webmin/miniserv.pem
+    fi
 
 COPY --chmod=0755 entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
