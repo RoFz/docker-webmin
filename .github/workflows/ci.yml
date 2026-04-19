@@ -65,15 +65,16 @@ jobs:
           import json
           from pathlib import Path
 
-          sarif_path = Path("checkov.sarif")
-          sarif = json.loads(sarif_path.read_text())
+          source_path = Path("checkov.sarif")
+          target_path = Path("checkov-normalized.sarif")
+          sarif = json.loads(source_path.read_text())
 
           for run in sarif.get("runs", []):
               driver = run.get("tool", {}).get("driver", {})
               if driver.get("name") == "checkov":
                   driver["name"] = "Checkov"
 
-          sarif_path.write_text(json.dumps(sarif))
+          target_path.write_text(json.dumps(sarif))
           PY
 
       - name: Build image
@@ -148,7 +149,7 @@ jobs:
         uses: github/codeql-action/upload-sarif@95e58e9a2cdfd71adc6e0353d5c52f41a045d225 # v4.35.2
         if: always() && github.event.pull_request.head.repo.fork != true
         with:
-          sarif_file: checkov.sarif
+          sarif_file: checkov-normalized.sarif
           category: checkov
 
       - name: Upload Trivy results to GitHub Security tab
