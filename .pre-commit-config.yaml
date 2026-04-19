@@ -16,6 +16,12 @@ repos:
     hooks:
       - id: markdownlint-cli2
 
+  # --- Dockerfile linting ---
+  - repo: https://github.com/hadolint/hadolint
+    rev: v2.14.0
+    hooks:
+      - id: hadolint-docker
+
   # --- Secret detection ---
   - repo: https://github.com/gitleaks/gitleaks
     rev: v8.30.1
