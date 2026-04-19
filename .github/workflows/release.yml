@@ -1,0 +1,27 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+permissions: read-all
+
+jobs:
+  release-please:
+    name: Release PR
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+
+    steps:
+      - name: Run release-please
+        uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          release-type: simple
