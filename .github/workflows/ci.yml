@@ -44,8 +44,11 @@ jobs:
           dockerfile: Dockerfile
           failure-threshold: warning
 
+      # NOTE: checkov-action has not cut a release since March 2022 (last tag: v12.1347.0).
+      # The upstream README explicitly documents @master as the recommended usage pattern.
+      # Inputs such as `file` and `output_file_path` only exist on master, not on any release tag.
       - name: Checkov
-        uses: bridgecrewio/checkov-action@99bb2caf247dfd9f03cf984373bc6043d4e32ebf # v12.1347.0
+        uses: bridgecrewio/checkov-action@5ef773c6dcc9416c0e1973045ca575493c4ce41a # master
         with:
           file: Dockerfile
           framework: dockerfile
