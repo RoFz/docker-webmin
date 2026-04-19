@@ -1,0 +1,3 @@
+[general]
+contrib=CT1
+extra-path=gitlint_rules/
