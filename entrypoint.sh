@@ -26,6 +26,19 @@ has_existing_state() {
   [ "$(cat "$default_hash_file")" != "$(current_users_hash)" ]
 }
 
+pem_file="/etc/webmin/miniserv.pem"
+if [ ! -f "$pem_file" ]; then
+  pem_key="$(mktemp)"
+  pem_crt="$(mktemp)"
+  openssl req -newkey rsa:2048 -x509 -nodes -days 3650 \
+    -keyout "$pem_key" \
+    -out "$pem_crt" \
+    -subj "/CN=localhost" 2>/dev/null
+  cat "$pem_key" "$pem_crt" > "$pem_file"
+  chmod 0600 "$pem_file"
+  rm -f "$pem_key" "$pem_crt"
+fi
+
 if ! has_existing_state; then
   if [ -n "${WEBMIN_INITIAL_ROOT_PASSWORD:-}" ] && [ -n "${WEBMIN_INITIAL_ROOT_PASSWORD_FILE:-}" ]; then
     echo "Set only one of WEBMIN_INITIAL_ROOT_PASSWORD or WEBMIN_INITIAL_ROOT_PASSWORD_FILE on first boot." >&2

@@ -37,7 +37,8 @@ RUN set -eux; \
       printf '%s\n' "${users_hash%% *}" > /usr/local/share/docker-webmin/default-miniserv.users.sha256; \
     else \
       printf '%s\n' absent > /usr/local/share/docker-webmin/default-miniserv.users.sha256; \
-    fi
+    fi; \
+    rm -f /etc/webmin/miniserv.pem
 
 COPY --chmod=0755 entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
