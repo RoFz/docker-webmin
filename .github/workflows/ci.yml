@@ -48,7 +48,7 @@ jobs:
       # The upstream README explicitly documents @master as the recommended usage pattern.
       # Inputs such as `file` and `output_file_path` only exist on master, not on any release tag.
       - name: Checkov
-        uses: bridgecrewio/checkov-action@5ef773c6dcc9416c0e1973045ca575493c4ce41a # master
+        uses: bridgecrewio/checkov-action@3203f966a7ccd680cd8f6aaa3c3c5b0b3e9afa32 # master
         with:
           file: Dockerfile
           framework: dockerfile
