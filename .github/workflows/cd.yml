@@ -27,6 +27,8 @@ jobs:
   publish:
     name: Build & Push
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout code
@@ -66,3 +68,32 @@ jobs:
           cache-to: type=gha,mode=max
           provenance: true
           sbom: true
+
+      - name: Add Docker Hub reference to release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag="${{ github.event.release.tag_name }}"
+          image="${{ vars.DOCKERHUB_USERNAME }}/docker-webmin"
+          version="${{ steps.meta.outputs.version }}"
+          tmp="$(mktemp)"
+          gh release view "$tag" \
+            --repo "${{ github.repository }}" \
+            --json body \
+            --jq .body > "$tmp"
+          cat >> "$tmp" <<EOF
+
+          ---
+
+          ## Docker Hub
+
+          \`\`\`
+          docker pull ${image}:${version}
+          \`\`\`
+
+          https://hub.docker.com/r/${image}
+          EOF
+          gh release edit "$tag" \
+            --repo "${{ github.repository }}" \
+            --notes-file "$tmp"
