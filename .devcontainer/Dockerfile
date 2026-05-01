@@ -5,9 +5,10 @@ FROM mcr.microsoft.com/devcontainers/base:ubuntu-24.04
 # are tied to the Ubuntu release in that image and would break on every base image bump.
 # hadolint ignore=DL3008
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends pipx python3-pip \
+    && apt-get install -y --no-install-recommends gnupg2 pipx python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /home/vscode/.claude /home/vscode/.codex /home/vscode/.vscode-server \
-    && chown vscode:vscode /home/vscode/.claude /home/vscode/.codex /home/vscode/.vscode-server \
+RUN mkdir -p /home/vscode/.claude /home/vscode/.codex /home/vscode/.gnupg /home/vscode/.vscode-server \
+    && chown vscode:vscode /home/vscode/.claude /home/vscode/.codex /home/vscode/.gnupg /home/vscode/.vscode-server \
+    && chmod 700 /home/vscode/.gnupg \
     && chmod 777 /home/vscode/.vscode-server

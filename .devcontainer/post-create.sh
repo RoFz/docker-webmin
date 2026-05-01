@@ -3,6 +3,15 @@ set -euo pipefail
 
 export PATH="$HOME/.local/bin:$PATH"
 
+echo "[devcontainer] Configuring GPG..."
+chmod 700 ~/.gnupg
+printf 'no-autostart\n' > ~/.gnupg/gpg-agent.conf
+chmod 600 ~/.gnupg/gpg-agent.conf
+SIGNING_KEY=$(git config user.signingkey 2>/dev/null || true)
+if [ -n "$SIGNING_KEY" ]; then
+    gpg --keyserver keys.openpgp.org --recv-keys "$SIGNING_KEY" || true
+fi
+
 echo "[devcontainer] Installing tooling..."
 
 # Claude Code
