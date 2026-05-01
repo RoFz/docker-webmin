@@ -90,7 +90,7 @@ The devcontainer includes:
 
 Pull requests and pushes to `main` run CI that:
 
-- validates the Dockerfile with `docker build --check`, Hadolint, and Checkov
+- validates the Dockerfile with `docker build --check` and Hadolint
 - builds the image and runs a smoke test against the HTTPS endpoint
 - scans the resulting image with Trivy
 

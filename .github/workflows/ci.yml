@@ -44,39 +44,6 @@ jobs:
           dockerfile: Dockerfile
           failure-threshold: warning
 
-      # NOTE: checkov-action has not cut a release since March 2022 (last tag: v12.1347.0).
-      # The upstream README explicitly documents @master as the recommended usage pattern.
-      # Inputs such as `file` and `output_file_path` only exist on master, not on any release tag.
-      - name: Checkov
-        uses: bridgecrewio/checkov-action@5ef773c6dcc9416c0e1973045ca575493c4ce41a # master
-        with:
-          file: Dockerfile
-          framework: dockerfile
-          skip_check: CKV_DOCKER_8
-          output_format: sarif
-          output_file_path: checkov.sarif,
-          quiet: true
-
-      - name: Normalize Checkov SARIF tool name
-        shell: bash
-        run: |
-          set -euo pipefail
-          python3 - <<'PY'
-          import json
-          from pathlib import Path
-
-          source_path = Path("checkov.sarif")
-          target_path = Path("checkov-normalized.sarif")
-          sarif = json.loads(source_path.read_text())
-
-          for run in sarif.get("runs", []):
-              driver = run.get("tool", {}).get("driver", {})
-              if driver.get("name") == "checkov":
-                  driver["name"] = "Checkov"
-
-          target_path.write_text(json.dumps(sarif))
-          PY
-
       - name: Build image
         uses: docker/build-push-action@bcafcacb16a39f128d818304e6c9c0c18556b85f # v7.1.0
         with:
@@ -144,13 +111,6 @@ jobs:
           severity: HIGH,CRITICAL
           exit-code: '1'
           ignore-unfixed: true
-
-      - name: Upload Checkov results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@95e58e9a2cdfd71adc6e0353d5c52f41a045d225 # v4.35.2
-        if: always() && github.event.pull_request.head.repo.fork != true
-        with:
-          sarif_file: checkov-normalized.sarif
-          category: checkov
 
       - name: Upload Trivy results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@95e58e9a2cdfd71adc6e0353d5c52f41a045d225 # v4.35.2

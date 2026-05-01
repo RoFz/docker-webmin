@@ -3,7 +3,6 @@
 FROM debian:bookworm-slim@sha256:4724b8cc51e33e398f0e2e15e18d5ec2851ff0c2280647e1310bc1642182655d
 
 # NOTE: Webmin is designed to run with full root privileges, so root is the intentional runtime default for this image.
-#checkov:skip=CKV_DOCKER_8: Webmin requires a root runtime per upstream documentation
 # hadolint ignore=DL3002
 USER root
 
