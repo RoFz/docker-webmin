@@ -1,17 +1,16 @@
 {
-  // Replace REPO_NAME with the repository name in:
-  //   - "name", "runArgs" --name, "workspaceMount", "workspaceFolder", and volume source names.
-  "name": "REPO_NAME",
+  "name": "docker-webmin",
   "runArgs": [
     "--name",
-    "REPO_NAME"
+    "docker-webmin"
   ],
   "build": {
     "dockerfile": "Dockerfile"
   },
   "remoteUser": "vscode",
-  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/REPO_NAME,type=bind,consistency=cached",
-  "workspaceFolder": "/workspaces/REPO_NAME",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/docker-webmin,type=bind,consistency=cached",
+  "workspaceFolder": "/workspaces/docker-webmin",
+  "workspaceFile": "/workspaces/docker-webmin/docker-webmin.code-workspace",
   "features": {
     "ghcr.io/devcontainers/features/docker-in-docker:2": {},
     "ghcr.io/devcontainers/features/node:1": {},
@@ -19,14 +18,20 @@
   },
   "mounts": [
     {
-      "source": "REPO_NAME-claude",
+      "source": "docker-webmin-claude",
       "target": "/home/vscode/.claude",
       "type": "volume"
     },
     {
-      "source": "REPO_NAME-codex",
+      "source": "docker-webmin-codex",
       "target": "/home/vscode/.codex",
       "type": "volume"
+    },
+    {
+      "source": "${localWorkspaceFolder}/../container_apps",
+      "target": "/workspaces/container_apps",
+      "type": "bind",
+      "consistency": "cached"
     }
   ],
   "postStartCommand": "sudo chown -R vscode:vscode /home/vscode/.claude /home/vscode/.codex && sudo chmod -R a+rwX /home/vscode/.vscode-server",
