@@ -15,11 +15,8 @@
   non-product changes, use types such as `ci`, `chore`, `docs`, `build`, or
   `refactor` instead of `feat` or `fix`.
 - Include a commit body when additional context is useful.
-- Write normal explanatory prose in the body when you are only providing
-  context.
-- If you want Release Please to parse multiple changelog entries from one
-  commit, place additional Conventional Commit entries at the end of the body
-  with no bullet prefix, for example:
+- Every non-blank body line must be a Conventional Commit entry in the form
+  `type[(scope)]: description`, for example:
   `feat(module): add support for per-repo configuration`
   `fix(ci): correct workflow trigger conditions`
   `chore(pre-commit): update hook pins`
