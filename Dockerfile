@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.19.0
 
-FROM debian:bookworm-slim@sha256:4724b8cc51e33e398f0e2e15e18d5ec2851ff0c2280647e1310bc1642182655d
+FROM debian:bookworm-slim@sha256:f9c6a2fd2ddbc23e336b6257a5245e31f996953ef06cd13a59fa0a1df2d5c252
 
 # NOTE: Webmin is designed to run with full root privileges, so root is the intentional runtime default for this image.
 # hadolint ignore=DL3002
