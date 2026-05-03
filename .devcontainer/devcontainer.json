@@ -10,6 +10,7 @@
   "remoteUser": "vscode",
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/docker-webmin,type=bind,consistency=cached",
   "workspaceFolder": "/workspaces/docker-webmin",
+  "workspaceFile": "/workspaces/docker-webmin/docker-webmin.code-workspace",
   "features": {
     "ghcr.io/devcontainers/features/docker-in-docker:2": {},
     "ghcr.io/devcontainers/features/node:1": {},
@@ -25,6 +26,12 @@
       "source": "docker-webmin-codex",
       "target": "/home/vscode/.codex",
       "type": "volume"
+    },
+    {
+      "source": "${localWorkspaceFolder}/../container_apps",
+      "target": "/workspaces/container_apps",
+      "type": "bind",
+      "consistency": "cached"
     }
   ],
   "postStartCommand": "sudo chown -R vscode:vscode /home/vscode/.claude /home/vscode/.codex && sudo chmod -R a+rwX /home/vscode/.vscode-server",

@@ -1,0 +1,6 @@
+{
+  "folders": [
+    { "path": ".", "name": "docker-webmin" },
+    { "path": "../container_apps", "name": "container_apps" }
+  ]
+}
