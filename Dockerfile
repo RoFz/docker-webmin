@@ -50,7 +50,7 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 
 ARG OCI_CREATED=""
-ARG OCI_VERSION="0.1.0" # x-release-please-version
+ARG OCI_VERSION="0.2.0" # x-release-please-version
 ARG OCI_REVISION="unknown"
 ARG OCI_BASE_NAME="docker.io/library/debian:bookworm-slim"
 ARG OCI_BASE_DIGEST="sha256:4724b8cc51e33e398f0e2e15e18d5ec2851ff0c2280647e1310bc1642182655d"
