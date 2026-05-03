@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.2.0](https://github.com/RoFz/docker-webmin/compare/v0.1.0...v0.2.0) (2026-05-03)
+
+
+### Features
+
+* add BIND9 DNS management support ([52c5c65](https://github.com/RoFz/docker-webmin/commit/52c5c6513323886502e57383d80e893cc3ba7e4e))
+* **dockerfile:** install bind9 and bind9-utils for Webmin BIND module ([52c5c65](https://github.com/RoFz/docker-webmin/commit/52c5c6513323886502e57383d80e893cc3ba7e4e))
+* **entrypoint:** auto-configure Webmin BIND8 module from env vars on startup ([52c5c65](https://github.com/RoFz/docker-webmin/commit/52c5c6513323886502e57383d80e893cc3ba7e4e))
+
 ## 0.1.0 (2026-05-01)
 
 
