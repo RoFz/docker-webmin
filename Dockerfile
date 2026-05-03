@@ -27,6 +27,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
       > /etc/apt/sources.list.d/webmin.list; \
     apt-get update; \
     apt-get install -y --install-recommends webmin; \
+    apt-get install -y --no-install-recommends bind9 bind9-utils; \
     apt-get purge -y --auto-remove gnupg; \
     rm -f /etc/webmin/miniserv.pem
 

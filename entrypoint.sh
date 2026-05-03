@@ -66,4 +66,50 @@ if ! has_existing_state; then
   touch "$marker_file"
 fi
 
+# ── BIND DNS module configuration ────────────────────────────────
+# Runs every boot so env var changes take effect on container restart.
+if [ -n "${BIND_SERVER:-}" ]; then
+  _bind_rndc_port="${BIND_RNDC_PORT:-953}"
+  _bind_rndc_key="${BIND_RNDC_KEY:-/etc/bind/rndc.key}"
+  _bind_named_conf="${BIND_NAMED_CONF:-/etc/bind/named.conf}"
+  _bind_zone_dir="${BIND_ZONE_DIR:-/var/cache/bind}"
+
+  # Extract key name from rndc.key (e.g. key "rndc-key" { ... })
+  _rndc_key_name="rndc-key"
+  if [ -f "$_bind_rndc_key" ]; then
+    _kn="$(awk '/^key /{gsub(/"/, "", $2); print $2; exit}' "$_bind_rndc_key")"
+    [ -n "$_kn" ] && _rndc_key_name="$_kn"
+  fi
+
+  printf 'include "%s";\noptions {\n  default-server %s;\n  default-port %s;\n  default-key "%s";\n};\n' \
+    "$_bind_rndc_key" "$BIND_SERVER" "$_bind_rndc_port" "$_rndc_key_name" \
+    > /etc/rndc.conf
+  chmod 0640 /etc/rndc.conf
+
+  mkdir -p /etc/webmin/bind8
+  _b8=/etc/webmin/bind8/config
+
+  # Insert or replace a key=value line in the webmin module config.
+  set_b8() {
+    if grep -q "^${1}=" "$_b8" 2>/dev/null; then
+      perl -i -pe "s|^${1}=.*|${1}=${2}|" "$_b8"
+    else
+      printf '%s=%s\n' "$1" "$2" >> "$_b8"
+    fi
+  }
+
+  set_b8 named_conf   "$_bind_named_conf"
+  set_b8 named_path   /usr/sbin/named
+  set_b8 master_dir   "$_bind_zone_dir"
+  set_b8 rndc_cmd     /usr/sbin/rndc
+  set_b8 rndc_conf    /etc/rndc.conf
+  set_b8 checkzone    /usr/sbin/named-checkzone
+  set_b8 checkconf    /usr/sbin/named-checkconf
+  # named runs in the bind9 container — disable start/stop, map restart to rndc reload
+  set_b8 start_cmd    true
+  set_b8 stop_cmd     true
+  set_b8 restart_cmd  "/usr/sbin/rndc -c /etc/rndc.conf reload"
+  set_b8 no_chroot    1
+fi
+
 exec /usr/share/webmin/miniserv.pl --nofork /etc/webmin/miniserv.conf
