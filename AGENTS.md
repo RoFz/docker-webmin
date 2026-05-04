@@ -1,3 +1,13 @@
+# Agent Guidelines
+
+## Pre-Commit Checks
+
+- Before staging and committing, run `git status` to compare the local branch
+  with its remote tracking branch.
+- If the local branch is behind or has diverged, pull and rebase on top of the
+  remote (`git pull --rebase`) before committing, to avoid a diverged history
+  that must be resolved at push time.
+
 ## Commit Messages
 
 - Use Conventional Commits for every commit subject.
