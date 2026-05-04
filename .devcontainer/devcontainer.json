@@ -28,13 +28,24 @@
       "type": "volume"
     },
     {
+      "source": "docker-webmin-gh-config",
+      "target": "/home/vscode/.config/gh",
+      "type": "volume"
+    },
+    {
+      "source": "${localEnv:HOME}${localEnv:USERPROFILE}/.ssh",
+      "target": "/home/vscode/.ssh",
+      "type": "bind",
+      "consistency": "cached"
+    },
+    {
       "source": "${localWorkspaceFolder}/../container_apps",
       "target": "/workspaces/container_apps",
       "type": "bind",
       "consistency": "cached"
     }
   ],
-  "postStartCommand": "sudo chown -R vscode:vscode /home/vscode/.claude /home/vscode/.codex && sudo chmod -R a+rwX /home/vscode/.vscode-server",
+  "postStartCommand": "sudo chown -R vscode:vscode /home/vscode/.claude /home/vscode/.codex /home/vscode/.config/gh && sudo chmod -R a+rwX /home/vscode/.vscode-server",
   "postCreateCommand": "bash .devcontainer/post-create.sh",
   "postAttachCommand": "bash .devcontainer/post-attach.sh",
   "containerEnv": {
