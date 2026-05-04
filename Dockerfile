@@ -4,7 +4,7 @@ FROM debian:bookworm-slim@sha256:f9c6a2fd2ddbc23e336b6257a5245e31f996953ef06cd13
 
 # NOTE: Webmin is designed to run with full root privileges, so root is the intentional runtime default for this image.
 # hadolint ignore=DL3002
-USER root
+USER 0
 
 # NOTE: Exact APT package version pinning is intentionally not used here because this image tracks
 # Debian and Webmin repository updates, and Webmin is intentionally installed with recommends to
