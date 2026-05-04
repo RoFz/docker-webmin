@@ -16,7 +16,7 @@ name: CD
 #     Then consume in the Dockerfile with: RUN --mount=type=secret,id=my_secret ...
 on:
   release:
-    types: [published]
+    types: [created]
 
 permissions: read-all
 
@@ -96,4 +96,5 @@ jobs:
           EOF
           gh release edit "$tag" \
             --repo "${{ github.repository }}" \
-            --notes-file "$tmp"
+            --notes-file "$tmp" \
+            --draft=false
