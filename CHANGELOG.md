@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.2.1](https://github.com/RoFz/docker-webmin/compare/v0.2.0...v0.2.1) (2026-05-17)
+
+
+### Bug Fixes
+
+* **dockerfile:** add apt-get -y upgrade before webmin install ([6100665](https://github.com/RoFz/docker-webmin/commit/6100665367c68541216c6a3b22ebbd107eefde4c))
+* **dockerfile:** apply apt-get upgrade to pick up security backports ([6100665](https://github.com/RoFz/docker-webmin/commit/6100665367c68541216c6a3b22ebbd107eefde4c))
+* **dockerfile:** Docker resolves USER names via getpwnam on healthcheck exec, which fails in userns-remap and rootless runtime configurations ([8e09d33](https://github.com/RoFz/docker-webmin/commit/8e09d33277744ab4a5a8cf9ac4924dd7b55f1e50))
+* **dockerfile:** numeric UID bypasses the name lookup, eliminating recurring warnings in docker.log ([8e09d33](https://github.com/RoFz/docker-webmin/commit/8e09d33277744ab4a5a8cf9ac4924dd7b55f1e50))
+* **dockerfile:** use numeric UID 0 to avoid health check passwd lookup ([8e09d33](https://github.com/RoFz/docker-webmin/commit/8e09d33277744ab4a5a8cf9ac4924dd7b55f1e50))
+
 ## [0.2.0](https://github.com/RoFz/docker-webmin/compare/v0.1.0...v0.2.0) (2026-05-03)
 
 
