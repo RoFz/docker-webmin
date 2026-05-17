@@ -8,8 +8,9 @@ USER 0
 
 # NOTE: Exact APT package version pinning is intentionally not used here because this image tracks
 # Debian and Webmin repository updates, and Webmin is intentionally installed with recommends to
-# match the upstream Debian installation guidance.
-# hadolint ignore=DL3008,DL3015
+# match the upstream Debian installation guidance. apt-get upgrade pulls security backports that
+# the pinned base image digest does not yet include, so Trivy does not flag fixable CVEs.
+# hadolint ignore=DL3005,DL3008,DL3015
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
     set -eux; \
@@ -26,6 +27,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
       'deb [signed-by=/usr/share/keyrings/debian-webmin-developers.gpg] https://download.webmin.com/download/newkey/repository stable contrib' \
       > /etc/apt/sources.list.d/webmin.list; \
     apt-get update; \
+    apt-get -y upgrade; \
     apt-get install -y --install-recommends webmin; \
     apt-get install -y --no-install-recommends bind9 bind9-utils; \
     apt-get purge -y --auto-remove gnupg; \
