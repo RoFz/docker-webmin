@@ -24,9 +24,6 @@ npm install -g @openai/codex
 # ~/.claude dir, so it is not persisted automatically and must be seeded on each build.
 test -f ~/.claude.json || echo '{"hasCompletedOnboarding":true,"installMethod":"native"}' > ~/.claude.json
 
-# pre-commit (for local hook runs and gitlint)
-pipx install pre-commit
-
 echo "[devcontainer] Tool versions:"
 node --version
 npm --version

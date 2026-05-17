@@ -8,6 +8,13 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends curl gnupg2 pipx python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
+# Install pre-commit into a persistent, image-baked location so it survives container
+# restarts that wipe XDG_DATA_HOME (set to /tmp/xdg-data in devcontainer.json) and so the
+# binary is on PATH for every shell without needing pipx ensurepath. DL3013 is suppressed
+# because pre-commit is itself version-pinned via .pre-commit-config.yaml hook revs.
+# hadolint ignore=DL3013
+RUN PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install pre-commit
+
 RUN ARCH=$(dpkg --print-architecture) \
     && case "${ARCH}" in \
         amd64) HL_ARCH="x86_64" ;; \
