@@ -1,5 +1,31 @@
 # Changelog
 
+## [0.3.0](https://github.com/RoFz/docker-webmin/compare/v0.2.1...v0.3.0) (2026-05-17)
+
+
+### Features
+
+* add BIND9 DNS management support ([52c5c65](https://github.com/RoFz/docker-webmin/commit/52c5c6513323886502e57383d80e893cc3ba7e4e))
+* **deps:** add Dependabot version update configuration ([e7abc40](https://github.com/RoFz/docker-webmin/commit/e7abc40db3c4e7cd8b731b2e48b986b26205de1d))
+* **deps:** add pre-commit Dependabot updates and hadolint hook ([bce1212](https://github.com/RoFz/docker-webmin/commit/bce12128e2c9da76fb8b4f63da7480be7ca28e2e))
+* **dockerfile:** install bind9 and bind9-utils for Webmin BIND module ([52c5c65](https://github.com/RoFz/docker-webmin/commit/52c5c6513323886502e57383d80e893cc3ba7e4e))
+* **entrypoint:** auto-configure Webmin BIND8 module from env vars on startup ([52c5c65](https://github.com/RoFz/docker-webmin/commit/52c5c6513323886502e57383d80e893cc3ba7e4e))
+* **image:** implement webmin Docker image with full CI/CD pipeline ([ab85801](https://github.com/RoFz/docker-webmin/commit/ab858014ee7f01ef28ba5c64918ea5f48a7a1c74))
+
+
+### Bug Fixes
+
+* **dockerfile:** add apt-get -y upgrade before webmin install ([6100665](https://github.com/RoFz/docker-webmin/commit/6100665367c68541216c6a3b22ebbd107eefde4c))
+* **dockerfile:** apply apt-get upgrade to pick up security backports ([6100665](https://github.com/RoFz/docker-webmin/commit/6100665367c68541216c6a3b22ebbd107eefde4c))
+* **dockerfile:** Docker resolves USER names via getpwnam on healthcheck exec, which fails in userns-remap and rootless runtime configurations ([8e09d33](https://github.com/RoFz/docker-webmin/commit/8e09d33277744ab4a5a8cf9ac4924dd7b55f1e50))
+* **dockerfile:** numeric UID bypasses the name lookup, eliminating recurring warnings in docker.log ([8e09d33](https://github.com/RoFz/docker-webmin/commit/8e09d33277744ab4a5a8cf9ac4924dd7b55f1e50))
+* **dockerfile:** use numeric UID 0 to avoid health check passwd lookup ([8e09d33](https://github.com/RoFz/docker-webmin/commit/8e09d33277744ab4a5a8cf9ac4924dd7b55f1e50))
+* **image:** move miniserv.pem deletion into install layer to prevent secret leakage ([5ff371e](https://github.com/RoFz/docker-webmin/commit/5ff371e2cbe690180f0f3e1d3bb56a74f295df96))
+* **image:** remove baked-in TLS key and generate cert at container start ([1f9b76b](https://github.com/RoFz/docker-webmin/commit/1f9b76b732da068c33afc5ed4095ad8a2b9b782c))
+* **release:** configure manifest root package ([55d9c20](https://github.com/RoFz/docker-webmin/commit/55d9c2000c7385341ecda2f0800676c917b55fd3))
+* **workflows:** authenticate release-please via GitHub App token ([c095d18](https://github.com/RoFz/docker-webmin/commit/c095d181cc9877a966d2764846059f6a36dffcb6))
+* **workflows:** fix release workflow and add version tracking ([87637c6](https://github.com/RoFz/docker-webmin/commit/87637c69bc1ccc670a91bd55fe3998aa213b5388))
+
 ## [0.2.1](https://github.com/RoFz/docker-webmin/compare/v0.2.0...v0.2.1) (2026-05-17)
 
 
